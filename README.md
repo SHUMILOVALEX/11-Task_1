@@ -58,3 +58,53 @@ int main() {
 
     return 0;
 }
+Task 11.3
+#include <list>
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    list<string> listok = {"Ivanov", "Petrov", "Sidorov", "Alekseev", "Borisov"};
+    listok.sort();
+    for (string i : listok) {
+        cout << i << " ";
+    }
+    cout <<endl<< "New list: ";
+    listok.remove_if([](const string& name){return name[0] == 'A';});
+    for (string i : listok) {
+        cout << i << " ";
+    }
+}
+Task 11.4
+#include <forward_list>
+#include <iostream>
+using namespace std;
+int main() {
+    forward_list<int> mylist = {};
+    mylist.push_front(5);
+    for ( int i = 4; i != 0;--i) {
+        mylist.insert_after(mylist.before_begin(), i);
+    }
+    for (int i : mylist) {
+        cout << i;
+    }
+}
+Task 11.5
+#include <list>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main() {
+    list<int> a = {1, 3, 5, 7};
+    list<int> b = {2, 3, 6, 7, 8};
+    a.merge(b);
+    a.sort();
+    a.unique();
+    a.remove_if([](int x){return x > 6;});
+    for (int i : a) {
+        cout<< i;
+    }
+return 0;}
