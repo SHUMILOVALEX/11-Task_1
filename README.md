@@ -108,3 +108,125 @@ int main() {
         cout<< i;
     }
 return 0;}
+Task 12.1
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <algorithm>
+#include <cctype>
+using namespace std;
+
+int main() {
+    ifstream file("C:/Users/1/Desktop/input.txt");
+    if (!file.is_open()) {
+        cerr << "Unable to open input file!" << endl;
+        return 1;
+    }
+
+ofstream file1("C:/Users/1/Desktop/output.txt");
+    if (!file1.is_open()) {
+        cerr << "Unable to open output file!" << endl;
+        file.close();
+        return 1;
+    }
+    string line;
+    string line_find = "useragreement";
+    while (file >> line) {
+        cout << "Reading: " << line << endl;
+        string lower_line = line;
+        transform(lower_line.begin(), lower_line.end(), lower_line.begin(),
+                  [](unsigned char c) { return tolower(c); });
+        size_t pos = lower_line.find(line_find);
+        if (pos != string::npos) {
+            line.replace(pos, line_find.size(), "");
+            cout << "Modified: " << line << endl;
+        }
+        if (!(file1 << line << " ")) {
+            cerr << "Failed to write to output file!" << endl;
+            file.close();
+            file1.close();
+            return 1;
+        }
+    }
+    file.close();
+    file1.close();
+    if (file1.fail()) {
+        cerr << "Error closing output file!" << endl;
+        return 1;
+    }
+    cout << "Success! Output written to output.txt" << endl;
+    return 0;
+}
+Task 12.2
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+using namespace std;
+int main() {
+    ifstream file("input1.txt");
+    if (!file.is_open()) {
+        cout << "File could not be opened" << endl;
+        return 1;
+    }
+    ifstream file1("input2.txt");
+    if (!file1.is_open()) {
+        cout << "File could not be opened" << endl;
+        return 1;
+    }
+    string line1;
+    string line2;
+    file1 >> line1;
+    file1 >> line2;
+    if (line1.find(line2) != string::npos){
+        cout << "yes" << endl;
+}
+    else
+        cout << "no" << endl;
+file.close();
+}
+Task 12.3
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+string toBinary(int n) {
+    if (n == 0) return "0";
+    string binary;
+    while (n > 0) {
+        binary = (n % 2 == 0 ? "0" : "1") + binary;
+        n /= 2;
+    }
+    return binary;
+}
+
+int main() {
+    ofstream file("C:/Users/1/Desktop/input2.txt");
+    if (!file.is_open()) {
+        cout << "Error opening file" << endl;
+        return 1;
+    }
+
+ifstream file1("C:/Users/1/Desktop/input1.txt");
+    if (!file1.is_open()) {
+        cout << "Error opening file" << endl;
+        file.close();
+        return 1;
+    }
+    string line1;
+    getline(file1, line1);
+    for (char ch : line1) {
+        if (isdigit(ch)) {
+            int digit = ch - '0';
+            string binary = toBinary(digit);
+            file << binary;
+        } else {
+            file << ch;
+        }
+    }
+    file.close();
+    file1.close();
+    return 0;
+}
